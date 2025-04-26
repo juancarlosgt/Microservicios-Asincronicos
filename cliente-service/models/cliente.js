@@ -10,7 +10,14 @@ function crearCliente(nombre, email, fechaRegistro, callback) {
     callback(null, { id: this.lastID, nombre, email, fechaRegistro });
   });
 }
+function obtenerClientes(callback) {
+  db.all('SELECT * FROM clientes', (err, rows) => {
+    if (err) return callback(err);
+    callback(null, rows);
+  });
+}
 
 module.exports = {
-  crearCliente
+  crearCliente,
+  obtenerClientes
 };

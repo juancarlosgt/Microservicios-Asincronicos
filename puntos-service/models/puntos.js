@@ -10,7 +10,14 @@ function crearPuntos(clienteId, callback) {
     callback(null, { id: this.lastID, clienteId, puntos: 0 });
   });
 }
+function obtenerPuntos(callback) {
+  db.all('SELECT * FROM puntos', (err, rows) => {
+    if (err) return callback(err);
+    callback(null, rows);
+  });
+}
 
 module.exports = {
-  crearPuntos
+  crearPuntos,
+  obtenerPuntos
 };

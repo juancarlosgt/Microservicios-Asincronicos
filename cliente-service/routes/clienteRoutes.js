@@ -1,7 +1,7 @@
 // routes/clienteRoutes.js
 const express = require('express');
 const router = express.Router();
-const { crearCliente } = require('../models/cliente');
+const { crearCliente,obtenerClientes } = require('../models/cliente');
 const { publishClienteCreado } = require('../rabbitmq');
 
 router.post('/clientes', (req, res) => {
@@ -19,5 +19,10 @@ router.post('/clientes', (req, res) => {
     res.status(201).json(cliente);
   });
 });
-
+router.get('/clientes', (req, res) => {
+  obtenerClientes((err, clientes) => {
+    if (err) return res.status(500).json({ error: 'Error al obtener clientes' });
+    res.json(clientes);
+  });
+});
 module.exports = router;

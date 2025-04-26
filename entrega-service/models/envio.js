@@ -10,7 +10,14 @@ function crearEnvio(clienteId, fechaSolicitud, callback) {
     callback(null, { id: this.lastID, clienteId, estado: 'pendiente', fechaSolicitud });
   });
 }
+function obtenerEntregas(callback) {
+  db.all('SELECT * FROM envios', (err, rows) => {
+    if (err) return callback(err);
+    callback(null, rows);
+  });
+}
 
 module.exports = {
-  crearEnvio
+  crearEnvio,
+  obtenerEntregas
 };
