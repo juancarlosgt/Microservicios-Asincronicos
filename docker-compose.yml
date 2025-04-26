@@ -1,0 +1,55 @@
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # puerto para aplicaciones
+      - "15672:15672" # puerto para el panel de administración web
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  cliente-service:
+    build:
+      context: ./cliente-service
+    container_name: cliente-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./cliente-service/.env
+
+  puntos-service:
+    build:
+      context: ./puntos-service
+    container_name: puntos-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./puntos-service/.env
+
+  entrega-service:
+    build:
+      context: ./entrega-service
+    container_name: entrega-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./entrega-service/.env
+
+  email-service:
+    build:
+      context: ./email-service
+    container_name: email-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./email-service/.env
