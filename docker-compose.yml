@@ -20,6 +20,7 @@ services:
       - rabbitmq
     env_file:
       - ./cliente-service/.env
+    restart: always
 
   puntos-service:
     build:
@@ -31,6 +32,7 @@ services:
       - rabbitmq
     env_file:
       - ./puntos-service/.env
+    restart: always
 
   entrega-service:
     build:
@@ -42,6 +44,7 @@ services:
       - rabbitmq
     env_file:
       - ./entrega-service/.env
+    restart: always
 
   email-service:
     build:
@@ -53,3 +56,18 @@ services:
       - rabbitmq
     env_file:
       - ./email-service/.env
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - cliente-service
+      - puntos-service
+      - entrega-service
+      - email-service
+    restart: always
+
