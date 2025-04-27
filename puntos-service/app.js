@@ -4,6 +4,9 @@ const app = express();
 require('dotenv').config();
 const { connectRabbitMQ } = require('./rabbitmq');
 const { obtenerPuntos } = require('./models/puntos');
+const cors = require('cors');
+app.use(cors());
+
 app.get('/puntos', (req, res) => {
   obtenerPuntos((err, puntos) => {
     if (err) return res.status(500).json({ error: 'Error al obtener puntos' });

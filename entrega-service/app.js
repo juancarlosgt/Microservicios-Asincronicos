@@ -4,7 +4,8 @@ const app = express();
 require('dotenv').config();
 const { connectRabbitMQ } = require('./rabbitmq');
 const { obtenerEntregas } = require('./models/envio');
-
+const cors = require('cors');
+app.use(cors());
 const PORT = process.env.PORT || 3002;
 app.get('/entregas', (req, res) => {
   obtenerEntregas((err, entregas) => {

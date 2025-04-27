@@ -3,7 +3,8 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const { connectRabbitMQ } = require('./rabbitmq');
-
+const cors = require('cors');
+app.use(cors());
 const PORT = process.env.PORT || 3003;
 
 async function start() {
